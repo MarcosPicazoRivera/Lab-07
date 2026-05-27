@@ -1,16 +1,14 @@
 on:
   push:
     branches: [ main, master ]
-    # PARTE 2: Filtro por caminos para activar la ejecución selectiva
     paths:
-      - 'frontend/**'       # Se dispara si cambia algo en la carpeta frontend
-      - '!.github/**'       # Ignora cambios en los propios workflows para evitar bucles
-      - '!documentacion/**' # REQUISITO: Ignora por completo cambios en documentación
+      - 'frontend/**'       
+      - '!.github/**'       
+      - '!documentacion/**' 
 
 jobs:
   call-reusable-ci:
     name: 📦 Invocar CI Reutilizable
-    # PARTE 4: Reutilizamos la lógica del linter común
     uses: ./.github/workflows/reusable-linter-test.yml
     with:
       component_name: 'Frontend Angular/React App'
@@ -20,7 +18,6 @@ jobs:
     needs: call-reusable-ci
     runs-on: ubuntu-latest
     steps:
-      # PARTE 5: Reporting dinámico en el Job Summary
       - name: Crear Resumen de Ejecución Selectiva
         run: |
           echo "## 📊 Reporte de Pipeline Monorepo (Frontend)" >> $GITHUB_STEP_SUMMARY

@@ -1,10 +1,9 @@
 on:
   push:
     branches: [ main, master ]
-    # PARTE 2: Filtro selectivo para el backend
     paths:
       - 'backend/**'
-      - '!documentacion/**' # Ignora explícitamente la documentación
+      - '!documentacion/**' 
 
 jobs:
   call-reusable-ci:
