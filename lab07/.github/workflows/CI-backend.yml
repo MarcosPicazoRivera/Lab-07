@@ -1,0 +1,28 @@
+on:
+  push:
+    branches: [ main, master ]
+    # PARTE 2: Filtro selectivo para el backend
+    paths:
+      - 'backend/**'
+      - '!documentacion/**' # Ignora explícitamente la documentación
+
+jobs:
+  call-reusable-ci:
+    name: 📦 Invocar CI Reutilizable
+    uses: ./.github/workflows/reusable-linter-test.yml
+    with:
+      component_name: 'Backend Node/Java API'
+
+  reporting-backend:
+    name: 📝 Generar Reporte de Optimización
+    needs: call-reusable-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Crear Resumen de Ejecución Selectiva
+        run: |
+          echo "## 📊 Reporte de Pipeline Monorepo (Backend)" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "* *Componente Afectado:* \backend/\ ⚙️" >> $GITHUB_STEP_SUMMARY
+          echo "* *Pipeline Ejecutado:* \CI-backend.yml\" >> $GITHUB_STEP_SUMMARY
+          echo "* *Jobs Omitidos de Forma Optimizada:* Frontend CI & Infraestructura CI" >> $GITHUB_STEP_SUMMARY
+          echo "* *Estrategia Aplicada:* Paths-filtering a nivel de trigger nativo. ⚡" >> $GITHUB_STEP_SUMMARY

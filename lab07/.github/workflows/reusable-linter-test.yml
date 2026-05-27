@@ -1,0 +1,26 @@
+on:
+  workflow_call:
+    inputs:
+      component_name:
+        required: true
+        type: string
+      environment:
+        required: false
+        type: string
+        default: 'Development'
+
+jobs:
+  validate:
+    name: 🧪 Validar (${{ inputs.component_name }})
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout código
+        uses: actions/checkout@v4
+
+      # Simulamos la optimización de caché y ejecución del componente específico
+      - name: 🛠️ Ejecutar Linter y Test Suite
+        run: |
+          echo "Optimizando entorno para el componente: ${{ inputs.component_name }}"
+          echo "Entorno de ejecución: ${{ inputs.environment }}"
+          echo "Simulando análisis estático de código... ¡OK! ✅"
+          echo "Simulando ejecución de tests unitarios... 100% PASSED 🚀"
